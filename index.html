@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="description" content="Snake Classic Game - Modern responsive snake game with PC and mobile modes">
+    <meta name="keywords" content="snake game, classic game, mobile game, retro game">
+    <meta name="author" content="KingSyah">
+    
+    <title>Snake Classic - Modern Retro Game</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Snake Classic">
+</head>
+<body>
+    <!-- Game Container -->
+    <div class="game-container" id="gameContainer">
+        
+        <!-- Header -->
+        <header class="game-header">
+            <div class="header-content">
+                <h1 class="game-title">
+                    <span class="title-text">SNAKE</span>
+                    <span class="title-classic">CLASSIC</span>
+                </h1>
+                
+                <!-- Game Controls -->
+                <div class="game-controls">
+                    <button class="control-btn" id="soundToggle" aria-label="Toggle Sound">
+                        <span class="sound-icon">🔊</span>
+                    </button>
+                    <button class="control-btn" id="pauseBtn" aria-label="Pause Game">
+                        <span class="pause-icon">⏸️</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Info -->
+        <div class="game-info">
+            <div class="score-display">
+                <span class="score-label">SCORE</span>
+                <span class="score-value" id="scoreValue">0</span>
+            </div>
+            <div class="high-score-display">
+                <span class="high-score-label">HIGH</span>
+                <span class="high-score-value" id="highScoreValue">0</span>
+            </div>
+            <div class="level-display">
+                <span class="level-label">LEVEL</span>
+                <span class="level-value" id="levelValue">1</span>
+            </div>
+        </div>
+
+        <!-- Game Canvas Container - Desktop Layout -->
+        <main class="game-main desktop-layout">
+            <div class="canvas-container">
+                <canvas id="gameCanvas" width="400" height="400" aria-label="Snake Game Canvas">
+                    Your browser does not support the HTML5 canvas element.
+                </canvas>
+
+                <!-- Game Overlay Messages -->
+                <div class="game-overlay" id="gameOverlay">
+                    <div class="overlay-content">
+                        <h2 class="overlay-title" id="overlayTitle">READY?</h2>
+                        <p class="overlay-message" id="overlayMessage">Press SPACE to start</p>
+                        <button class="restart-btn" id="restartBtn">START GAME</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- GameBoy Style Mobile Layout -->
+        <div class="gameboy-container">
+            <!-- GameBoy Screen Area -->
+            <div class="gameboy-screen">
+                <div class="screen-info">
+                    <div class="screen-brand">
+                        <span class="brand-text">SNAKE</span>
+                        <span class="brand-sub">CLASSIC</span>
+                        <span class="brand-copyright">© <span id="currentYearMobile">2025</span> KingSyah</span>
+                    </div>
+                    <div class="screen-controls">
+                        <button id="soundToggleMobile" class="gameboy-btn small">🔊</button>
+                        <button id="pauseBtnMobile" class="gameboy-btn small">PAU</button>
+                    </div>
+                </div>
+
+                <!-- Mobile Score Display -->
+                <div class="mobile-score-display">
+                    <div class="mobile-score-item">
+                        <span class="mobile-score-label">SCORE</span>
+                        <span class="mobile-score-value" id="scoreValueMobile">0</span>
+                    </div>
+                    <div class="mobile-score-item">
+                        <span class="mobile-score-label">HIGH</span>
+                        <span class="mobile-score-value" id="highScoreValueMobile">0</span>
+                    </div>
+                    <div class="mobile-score-item">
+                        <span class="mobile-score-label">LEVEL</span>
+                        <span class="mobile-score-value" id="levelValueMobile">1</span>
+                    </div>
+                </div>
+
+                <div class="game-board-container">
+                    <canvas id="gameCanvasMobile" width="280" height="280" aria-label="Snake Game Canvas Mobile">
+                        Your browser does not support the HTML5 canvas element.
+                    </canvas>
+
+                    <!-- Mobile Game Overlay -->
+                    <div class="game-overlay mobile-overlay" id="gameOverlayMobile">
+                        <div class="overlay-content">
+                            <h2 class="overlay-title" id="overlayTitleMobile">READY?</h2>
+                            <p class="overlay-message" id="overlayMessageMobile">Press START to begin</p>
+                            <button class="restart-btn gameboy-btn" id="restartBtnMobile">START</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GameBoy Style Controls -->
+            <div class="gameboy-controls">
+                <!-- D-Pad Style Left Controls -->
+                <div class="dpad-container">
+                    <div class="dpad">
+                        <button class="dpad-btn dpad-up" id="upBtn" aria-label="Move Up">▲</button>
+                        <button class="dpad-btn dpad-left" id="leftBtn" aria-label="Move Left">◀</button>
+                        <button class="dpad-btn dpad-center"></button>
+                        <button class="dpad-btn dpad-right" id="rightBtn" aria-label="Move Right">▶</button>
+                        <button class="dpad-btn dpad-down" id="downBtn" aria-label="Move Down">▼</button>
+                    </div>
+                    <div class="dpad-label">D-PAD</div>
+                </div>
+
+                <!-- Action Buttons Right -->
+                <div class="action-container">
+                    <div class="action-buttons">
+                        <button class="action-btn" id="startBtn">START</button>
+                        <button class="action-btn" id="selectBtn">SELECT</button>
+                    </div>
+                    <div class="action-label">ACTION</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions" id="instructions">
+            <div class="instruction-section pc-instructions">
+                <h3>PC Controls</h3>
+                <ul>
+                    <li><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> Move Snake</li>
+                    <li><kbd>SPACE</kbd> Pause/Resume</li>
+                    <li><kbd>R</kbd> Restart Game</li>
+                    <li><kbd>M</kbd> Toggle Sound</li>
+                </ul>
+            </div>
+            
+            <div class="instruction-section mobile-instructions">
+                <h3>Mobile Controls</h3>
+                <ul>
+                    <li>Use D-Pad to move snake</li>
+                    <li>START button to pause/resume</li>
+                    <li>SELECT button to restart</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="game-footer">
+            <p class="footer-text">
+                Made with ❤️ |
+                <span class="device-mode" id="deviceMode">PC Mode</span>
+            </p>
+            <p class="copyright-text">
+                © <span id="currentYear">2025</span> KingSyah. All rights reserved.
+            </p>
+        </footer>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-snake">🐍</div>
+            <h2 class="loading-title">SNAKE CLASSIC</h2>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            <p class="loading-text">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

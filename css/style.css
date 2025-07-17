@@ -1,0 +1,881 @@
+/* ==========================================================================
+   Snake Classic - Main Stylesheet
+   Modern responsive design with PC and mobile modes
+   © 2025 KingSyah
+   ========================================================================== */
+
+/* ==========================================================================
+   CSS Custom Properties (Variables)
+   ========================================================================== */
+:root {
+  /* Colors - Modern Dark Theme */
+  --primary-bg: #0a0a0a;
+  --secondary-bg: #1a1a1a;
+  --accent-bg: #2a2a2a;
+  --primary-text: #ffffff;
+  --secondary-text: #cccccc;
+  --accent-text: #00ff00;
+  --danger-text: #ff4444;
+  --warning-text: #ffaa00;
+  
+  /* Game Boy Colors for Mobile - Modern Cool Theme */
+  --gameboy-bg: #2c3e50;        /* Dark blue-gray body */
+  --gameboy-dark: #34495e;      /* Darker blue-gray */
+  --gameboy-medium: #7f8c8d;    /* Medium gray */
+  --gameboy-light: #ecf0f1;     /* Light gray */
+  --gameboy-screen: #1a252f;    /* Dark screen background */
+  --gameboy-accent: #3498db;    /* Blue accent */
+  --gameboy-button: #e74c3c;    /* Red buttons */
+  --gameboy-dpad: #95a5a6;      /* Gray D-pad */
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* Typography */
+  --font-family-primary: 'Courier New', monospace;
+  --font-family-secondary: 'Arial', sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-xxl: 2rem;
+  
+  /* Layout */
+  --max-width: 600px;
+  --canvas-size: 400px;
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family-primary);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--spacing-md);
+  overflow-x: hidden;
+  color: var(--primary-text);
+}
+
+/* ==========================================================================
+   Game Container
+   ========================================================================== */
+.game-container {
+  background: var(--primary-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-xl);
+  padding: var(--spacing-xl);
+  max-width: var(--max-width);
+  width: 100%;
+  position: relative;
+}
+
+/* ==========================================================================
+   Header Styles
+   ========================================================================== */
+.game-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.game-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-text {
+  font-size: var(--font-size-xxl);
+  font-weight: bold;
+  color: var(--accent-text);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 2px;
+}
+
+.title-classic {
+  font-size: var(--font-size-sm);
+  color: var(--secondary-text);
+  letter-spacing: 1px;
+  margin-top: -5px;
+}
+
+.game-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.control-btn {
+  background: var(--accent-bg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-sm);
+  color: var(--primary-text);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-size: var(--font-size-lg);
+  min-width: 40px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-btn:hover {
+  background: var(--accent-text);
+  color: var(--primary-bg);
+  transform: translateY(-2px);
+}
+
+.control-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Game Info Display
+   ========================================================================== */
+.game-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(135deg, var(--secondary-bg), var(--accent-bg));
+  border-radius: var(--border-radius);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--accent-text);
+  box-shadow: 0 2px 8px rgba(0, 255, 0, 0.1);
+}
+
+.score-display,
+.high-score-display,
+.level-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.score-label,
+.high-score-label,
+.level-label {
+  font-size: 0.6rem;
+  color: var(--secondary-text);
+  margin-bottom: 2px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.score-value,
+.high-score-value,
+.level-value {
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  color: var(--accent-text);
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+/* ==========================================================================
+   Desktop Layout
+   ========================================================================== */
+.desktop-layout {
+  display: block;
+}
+
+.game-main {
+  margin-bottom: var(--spacing-lg);
+}
+
+.canvas-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+#gameCanvas {
+  border: 2px solid var(--accent-text);
+  border-radius: var(--border-radius-sm);
+  background: var(--secondary-bg);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   Game Overlay
+   ========================================================================== */
+.game-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-sm);
+  z-index: 100;
+}
+
+.game-overlay.hidden {
+  display: none;
+}
+
+.overlay-content {
+  text-align: center;
+  padding: var(--spacing-xl);
+}
+
+.overlay-title {
+  font-size: var(--font-size-xl);
+  color: var(--accent-text);
+  margin-bottom: var(--spacing-md);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.overlay-message {
+  font-size: var(--font-size-md);
+  color: var(--secondary-text);
+  margin-bottom: var(--spacing-lg);
+}
+
+.restart-btn {
+  background: var(--accent-text);
+  color: var(--primary-bg);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.restart-btn:hover {
+  background: var(--primary-text);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.restart-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   GameBoy Mobile Layout
+   ========================================================================== */
+.gameboy-container {
+  display: none;
+  background: linear-gradient(145deg, var(--gameboy-bg), var(--gameboy-dark));
+  border-radius: 20px;
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255,255,255,0.1);
+  margin: var(--spacing-lg) 0;
+  border: 2px solid var(--gameboy-medium);
+}
+
+.gameboy-screen {
+  background: linear-gradient(145deg, var(--gameboy-screen), #0f1419);
+  border-radius: 15px;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(52, 152, 219, 0.2);
+  border: 2px solid var(--gameboy-accent);
+}
+
+.screen-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.screen-brand {
+  text-align: left;
+}
+
+.brand-text {
+  display: block;
+  font-size: var(--font-size-md);
+  font-weight: bold;
+  color: var(--gameboy-accent);
+  text-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.brand-sub {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--gameboy-light);
+}
+
+.brand-copyright {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--gameboy-medium);
+  margin-top: var(--spacing-xs);
+}
+
+.screen-controls {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.gameboy-btn {
+  background: linear-gradient(145deg, var(--gameboy-button), #c0392b);
+  color: var(--gameboy-light);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.gameboy-btn:hover {
+  background: linear-gradient(145deg, #e67e22, var(--gameboy-button));
+  transform: translateY(-1px);
+}
+
+.gameboy-btn:active {
+  transform: scale(0.95) translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.gameboy-btn.small {
+  padding: 2px 6px;
+  font-size: 0.6rem;
+}
+
+/* Mobile Score Display - Compact */
+.mobile-score-display {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+  background: linear-gradient(90deg, var(--gameboy-screen), #0f1419);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--gameboy-accent);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.mobile-score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 60px;
+}
+
+.mobile-score-label {
+  font-size: 0.5rem;
+  color: var(--gameboy-medium);
+  margin-bottom: 1px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.mobile-score-value {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--gameboy-accent);
+  text-shadow: 0 0 3px rgba(52, 152, 219, 0.5);
+}
+
+.game-board-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+#gameCanvasMobile {
+  border: 2px solid var(--gameboy-accent);
+  border-radius: var(--border-radius-sm);
+  background: var(--gameboy-screen);
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4), 0 0 10px rgba(52, 152, 219, 0.3);
+}
+
+/* ==========================================================================
+   GameBoy Controls
+   ========================================================================== */
+.gameboy-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 var(--spacing-md);
+}
+
+.dpad-container,
+.action-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.dpad {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 2px;
+  background: linear-gradient(145deg, var(--gameboy-dpad), var(--gameboy-medium));
+  border-radius: 50%;
+  padding: var(--spacing-sm);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0,0,0,0.2);
+  border: 2px solid var(--gameboy-dark);
+}
+
+.dpad-btn {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(145deg, var(--gameboy-light), var(--gameboy-medium));
+  border: none;
+  color: var(--gameboy-dark);
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.dpad-btn:hover,
+.dpad-btn:active {
+  background: linear-gradient(145deg, var(--gameboy-accent), var(--gameboy-light));
+  color: var(--gameboy-light);
+  transform: scale(0.95);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.dpad-up {
+  grid-column: 2;
+  grid-row: 1;
+  border-radius: 8px 8px 4px 4px;
+}
+
+.dpad-left {
+  grid-column: 1;
+  grid-row: 2;
+  border-radius: 8px 4px 4px 8px;
+}
+
+.dpad-center {
+  grid-column: 2;
+  grid-row: 2;
+  background: radial-gradient(circle, var(--gameboy-dark), var(--gameboy-bg));
+  cursor: default;
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.dpad-center:hover {
+  background: radial-gradient(circle, var(--gameboy-dark), var(--gameboy-bg));
+  transform: none;
+}
+
+.dpad-right {
+  grid-column: 3;
+  grid-row: 2;
+  border-radius: 4px 8px 8px 4px;
+}
+
+.dpad-down {
+  grid-column: 2;
+  grid-row: 3;
+  border-radius: 4px 4px 8px 8px;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.action-btn {
+  width: 60px;
+  height: 30px;
+  background: linear-gradient(145deg, var(--gameboy-button), #c0392b);
+  border: none;
+  border-radius: 15px;
+  color: var(--gameboy-light);
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.action-btn:hover,
+.action-btn:active {
+  background: linear-gradient(145deg, #e67e22, var(--gameboy-button));
+  transform: scale(0.95) translateY(1px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.dpad-label,
+.action-label {
+  font-size: 0.6rem;
+  color: var(--gameboy-light);
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* ==========================================================================
+   Instructions
+   ========================================================================== */
+.instructions {
+  background: var(--secondary-bg);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.instruction-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.instruction-section:last-child {
+  margin-bottom: 0;
+}
+
+.instruction-section h3 {
+  color: var(--accent-text);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-md);
+}
+
+.instruction-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.instruction-section li {
+  margin-bottom: var(--spacing-xs);
+  color: var(--secondary-text);
+  font-size: var(--font-size-sm);
+}
+
+.instruction-section kbd {
+  background: var(--accent-bg);
+  color: var(--primary-text);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.7rem;
+  margin-right: var(--spacing-xs);
+  border: 1px solid var(--accent-text);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.game-footer {
+  text-align: center;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--accent-bg);
+}
+
+.footer-text,
+.copyright-text {
+  font-size: var(--font-size-xs);
+  color: var(--secondary-text);
+  margin-bottom: var(--spacing-xs);
+}
+
+.device-mode {
+  color: var(--accent-text);
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   Loading Screen
+   ========================================================================== */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity var(--transition-slow);
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-snake {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-lg);
+  animation: bounce 1s infinite;
+}
+
+.loading-title {
+  font-size: var(--font-size-xl);
+  color: var(--accent-text);
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: 2px;
+}
+
+.loading-bar {
+  width: 200px;
+  height: 4px;
+  background: var(--accent-bg);
+  border-radius: 2px;
+  margin: 0 auto var(--spacing-md);
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  background: var(--accent-text);
+  width: 0%;
+  transition: width var(--transition-normal);
+}
+
+.loading-text {
+  color: var(--secondary-text);
+  font-size: var(--font-size-sm);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+/* Mobile First - Show GameBoy layout on mobile */
+@media (max-width: 768px) {
+  body {
+    padding: var(--spacing-xs);
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+
+  .game-container {
+    padding: var(--spacing-sm);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .desktop-layout {
+    display: none;
+  }
+
+  .gameboy-container {
+    display: block;
+  }
+
+  .pc-instructions {
+    display: none;
+  }
+
+  .header-content {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .game-info {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .score-display,
+  .high-score-display,
+  .level-display {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xs);
+  }
+
+  .score-label,
+  .high-score-label,
+  .level-label {
+    margin-bottom: 0;
+    margin-right: var(--spacing-sm);
+  }
+}
+
+/* Desktop - Show desktop layout */
+@media (min-width: 769px) {
+  .gameboy-container {
+    display: none;
+  }
+  
+  .mobile-instructions {
+    display: none;
+  }
+  
+  .game-container {
+    max-width: 800px;
+  }
+  
+  #gameCanvas {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .game-container {
+    max-width: 900px;
+  }
+  
+  #gameCanvas {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #gameCanvas,
+  #gameCanvasMobile {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .gameboy-container {
+    padding: var(--spacing-sm);
+  }
+  
+  .gameboy-screen {
+    padding: var(--spacing-sm);
+  }
+  
+  #gameCanvasMobile {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .dpad-btn {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .action-btn {
+    width: 50px;
+    height: 25px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles for accessibility */
+.dpad-btn:focus,
+.action-btn:focus,
+.control-btn:focus,
+.restart-btn:focus,
+.gameboy-btn:focus {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+
+/* Ensure buttons are touch-friendly */
+@media (pointer: coarse) {
+  .dpad-btn,
+  .action-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
